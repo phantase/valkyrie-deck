@@ -1,0 +1,34 @@
+version: '2'
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: arootpassword
+      MYSQL_DATABASE: vcdeck
+      MYSQL_USER: valkyrie
+      MYSQL_PASSWORD: crusade
+
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    ports:
+      - "8081:80"
+    volumes:
+      - /sessions
+
+  api:
+    depends_on:
+      - db
+    image: ftertre/damp
+    links:
+      - db
+    ports:
+      - "3000:80"
+    volumes:
+      - "./php-api/:/var/www/"
+      - "./.data/vcdeck:/var/www/html/images/vcdeck/"
