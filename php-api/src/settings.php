@@ -1,4 +1,7 @@
 <?php
+// Arbitrary set
+date_default_timezone_set('Europe/Paris');
+
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
